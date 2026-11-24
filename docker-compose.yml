@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  bot:
+    build: 
+      context: ./bot
+      dockerfile: Dockerfile
+    container_name: discord_bot_dev
+    # Mapeia a sua pasta local para dentro do container.
+    # Assim, ao editar um ficheiro no seu PC, o container recebe a alteração.
+    volumes:
+      - ./bot:/usr/src/app
+      # Este volume anônimo impede que o seu PC sobrescreva a pasta node_modules do container
+      - /usr/src/app/node_modules
+    env_file:
+      - ./bot/.env
+    restart: unless-stopped
